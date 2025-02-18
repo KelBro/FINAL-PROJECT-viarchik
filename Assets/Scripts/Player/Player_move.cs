@@ -24,19 +24,8 @@ public class Player_move : MonoBehaviour
 
     private void Update()
     {
-        if (m_Boolean.GetStateDown(SteamVR_Input_Sources.LeftHand))
-        {
-            checkWalk = true;
-        }
-        if (m_Boolean.GetStateUp(SteamVR_Input_Sources.LeftHand))
-        {
-            checkWalk = false;
-        }
-        if (checkWalk)
-        {
-            Vector3 direction = Player.instance.hmdTransform.TransformDirection(new Vector3(stick.axis.x, 0, stick.axis.y));
-            controller.Move(speed * Time.deltaTime * Vector3.ProjectOnPlane(direction, Vector3.up) - new Vector3(0, 9.81f, 0) * Time.deltaTime);
-        }
+        Vector3 direction = Player.instance.hmdTransform.TransformDirection(new Vector3(stick.axis.x, 0, stick.axis.y));
+        controller.Move(speed * Time.deltaTime * Vector3.ProjectOnPlane(direction, Vector3.up) - new Vector3(0, 9.81f, 0) * Time.deltaTime);
 
     }
 }
