@@ -1,0 +1,59 @@
+{
+    "crossroads": [
+        {
+	    "id": 0,
+	    "center": {
+			"x": 6,
+			"y": 6
+	    },
+	    "up": true,
+	    "down": true,
+	    "left": true,
+	    "right": true,
+	    "trafficLight1": 15,
+	    "trafficLight2": 15
+	}
+    ],
+    "blocks": [
+	{
+	    "left": {
+			"x": 12,
+			"y": 12
+	    },
+	    "right": {
+			"x": 32,
+			"y": 32
+	    }
+	},
+	{
+	    "left": {
+			"x": -20,
+			"y": 12
+	    },
+	    "right": {
+			"x": 0,
+			"y": 32
+	    }
+	},
+	{
+	    "left": {
+			"x": -20,
+			"y": -20
+	    },
+	    "right": {
+			"x": 0,
+			"y": 0
+	    }
+	},
+	{
+	    "left": {
+			"x": 12,
+			"y": -20
+	    },
+	    "right": {
+			"x": 32,
+			"y": 0
+	    }
+	}
+    ]
+}
