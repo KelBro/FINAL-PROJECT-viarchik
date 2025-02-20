@@ -1,0 +1,131 @@
+{
+    "crossroads": [
+        {
+	    "id": 0,
+	    "center": {
+			"x": 6,
+			"y": 6
+	    },
+	    "up": true,
+	    "down": true,
+	    "left": true,
+	    "right": true,
+	    "trafficLight1": 15,
+	    "trafficLight2": 15
+		},
+		{
+	    "id": 1,
+	    "center": {
+			"x": 38,
+			"y": 6
+	    },
+	    "up": false,
+	    "down": true,
+	    "left": true,
+	    "right": true,
+	    "trafficLight1": 15,
+	    "trafficLight2": 15
+		},
+		{
+	    "id": 2,
+	    "center": {
+			"x": 6,
+			"y": 38
+	    },
+	    "up": true,
+	    "down": true,
+	    "left": false,
+	    "right": true,
+	    "trafficLight1": 15,
+	    "trafficLight2": 15
+		},
+		{
+	    "id": 3,
+	    "center": {
+			"x": 38,
+			"y": 38
+	    },
+	    "up": true,
+	    "down": false,
+	    "left": true,
+	    "right": true,
+	    "trafficLight1": 15,
+	    "trafficLight2": 15
+		},
+		{
+	    "id": 4,
+	    "center": {
+			"x": 6,
+			"y": 70
+	    },
+	    "up": true,
+	    "down": true,
+	    "left": true,
+	    "right": true,
+	    "trafficLight1": 15,
+	    "trafficLight2": 15
+		}
+    ],
+    "blocks": [
+	{
+	    "left": {
+			"x": 12,
+			"y": 12
+	    },
+	    "right": {
+			"x": 52,
+			"y": 32
+	    }
+	},
+	{
+	    "left": {
+			"x": -20,
+			"y": 12
+	    },
+	    "right": {
+			"x": 0,
+			"y": 64
+	    }
+	},
+	{
+	    "left": {
+			"x": -20,
+			"y": -20
+	    },
+	    "right": {
+			"x": 0,
+			"y": 0
+	    }
+	},
+	{
+	    "left": {
+			"x": 12,
+			"y": -20
+	    },
+	    "right": {
+			"x": 32,
+			"y": 0
+	    }
+	},
+	{
+	    "left": {
+			"x": 44,
+			"y": -20
+	    },
+	    "right": {
+			"x": 64,
+			"y": 0
+	    }
+	},
+	{
+	    "left": {
+			"x": 12,
+			"y": 44
+	    },
+	    "right": {
+			"x": 52,
+			"y": 64
+	    }
+	}
+    ]
+}
