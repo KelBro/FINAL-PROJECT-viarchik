@@ -57,8 +57,11 @@ public class CityBuilder : MonoBehaviour
         foreach (Block block in levelData.blocks)
         {
             Point left = block.left;
+            left.x += 7.5f; left.y += 7.5f;
             Point right = block.right;
-            Vector3 center = new Vector3((left.x + right.x) / 2, 0f, (left.y + right.y) / 2);
+            right.x -= 7.5f; right.y -= 7.5f;
+
+            Vector3 center = new ((left.x + right.x) / 2, 0f, (left.y + right.y) / 2);
 
             GameObject sidewalk = GameObject.CreatePrimitive(PrimitiveType.Cube);
             sidewalk.transform.localScale = new Vector3(right.x - left.x + 3f, 0.2f, right.y - left.y + 3f);
@@ -82,10 +85,10 @@ public class CityBuilder : MonoBehaviour
             if (right.x > planeRight.x) { planeRight.x = right.x; }
             if (right.y > planeRight.z) { planeRight.z = right.y; }
 
-            float remainingX = right.x - left.x;
-            float remainingY = right.y - left.y;
-            float max = Mathf.Max(remainingX, remainingY);
-            float min = Mathf.Min(remainingX, remainingY);
+            //float remainingX = right.x - left.x;
+            //float remainingY = right.y - left.y;
+            //float max = Mathf.Max(remainingX, remainingY);
+            //float min = Mathf.Min(remainingX, remainingY);
 
             //List<Rectangle> buildingRects = FillRectangle(left.x, left.y, right.x, right.y);
 
@@ -112,14 +115,6 @@ public class CityBuilder : MonoBehaviour
                 }
             }
         }
-
-        // Create the ground plane
-        var planeRect = planeRight - planeLeft;
-        GameObject plane = GameObject.CreatePrimitive(PrimitiveType.Plane);
-        plane.transform.localScale = planeRect / 10;
-        var planeCenter = (planeLeft + planeRight) / 2;
-        plane.transform.position = planeCenter;
-        plane.GetComponent<Renderer>().material.color = new Color(0.2f, 0.2f, 0.2f);
 
         for (int i = 0; i < levelData.crossroads.Length; i++)
         {
@@ -162,43 +157,41 @@ public class CityBuilder : MonoBehaviour
                 }
             }
 
-            // Generating the trafficLights
-            if (crossroad.up)
+            // Generating the traffic lights
+            int c = 0;
+            foreach (bool tf in new bool[4] {crossroad.up, crossroad.down, crossroad.left, crossroad.right})
             {
-                Instantiate(trafficLight, center + new Vector3(-6.5f, 0, 6.5f), Quaternion.LookRotation(Vector3.back, Vector3.up));
+                if (tf) {  c++; }
             }
-            if (crossroad.down)
+            if (c > 2)
             {
-                Instantiate(trafficLight, center + new Vector3(6.5f, 0, -6.5f), Quaternion.LookRotation(Vector3.forward, Vector3.up));
-            }
-            if (crossroad.left)
-            {
-                Instantiate(trafficLight, center + new Vector3(-6.5f, 0, -6.5f), Quaternion.LookRotation(Vector3.right, Vector3.up));
-            }
-            if (crossroad.left)
-            {
-                Instantiate(trafficLight, center + new Vector3(6.5f, 0, 6.5f), Quaternion.LookRotation(Vector3.left, Vector3.up));
-            }
-        }
-
-        // I did this cuz I am running out of time and ideas. Don't do this like, ever.
-        Physics.simulationMode = SimulationMode.Script;
-        Physics.Simulate(0.01f);
-
-        // Cleanup extra traffic lines
-        foreach (Crossroad crossroad in levelData.crossroads)
-        {
-            Vector3 center = new(crossroad.center.x, 0f, crossroad.center.y);
-
-            RaycastHit hit;
-            if (Physics.Raycast(center + Vector3.up, Vector3.down, out hit, 2f))
-            {
-                Destroy(hit.transform.gameObject);
-                print("Hit detected!");
+                if (crossroad.up)
+                {
+                    Instantiate(trafficLight, center + new Vector3(-6.5f, 0, 6.5f), Quaternion.LookRotation(Vector3.back, Vector3.up));
+                }
+                if (crossroad.down)
+                {
+                    Instantiate(trafficLight, center + new Vector3(6.5f, 0, -6.5f), Quaternion.LookRotation(Vector3.forward, Vector3.up));
+                }
+                if (crossroad.left)
+                {
+                    Instantiate(trafficLight, center + new Vector3(-6.5f, 0, -6.5f), Quaternion.LookRotation(Vector3.right, Vector3.up));
+                }
+                if (crossroad.right)
+                {
+                    Instantiate(trafficLight, center + new Vector3(6.5f, 0, 6.5f), Quaternion.LookRotation(Vector3.left, Vector3.up));
+                }
             }
         }
 
-        Physics.simulationMode = SimulationMode.FixedUpdate;
+        // Create the ground plane
+        var planeRect = planeRight - planeLeft;
+        GameObject plane = GameObject.CreatePrimitive(PrimitiveType.Plane);
+        plane.transform.localScale = planeRect / 10;
+        var planeCenter = (planeLeft + planeRight) / 2;
+        plane.transform.position = planeCenter;
+        plane.GetComponent<Renderer>().material.color = new Color(0.2f, 0.2f, 0.2f);
+
     }
 
     //private struct Rectangle
@@ -283,4 +276,28 @@ public class CityBuilder : MonoBehaviour
     //    }
     //    return maxHeight - currentY;
     //}
+
+    private int cleanupTimer = 10;
+
+    private void FixedUpdate()
+    {
+        if (cleanupTimer < 0) return;
+        if (cleanupTimer > 0)
+        {
+            cleanupTimer--;
+            return;
+        }
+        // Cleanup extra traffic lines
+        foreach (Crossroad crossroad in levelData.crossroads)
+        {
+            Vector3 center = new(crossroad.center.x, 0f, crossroad.center.y);
+
+            RaycastHit hit;
+            if (Physics.Raycast(center + Vector3.up, Vector3.down, out hit, 2f))
+            {
+                Destroy(hit.transform.gameObject);
+                print("Hit detected!");
+            }
+        }
+    }
 }
